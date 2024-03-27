@@ -20,11 +20,9 @@ export async function uploadToS3(file: File) {
             Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
             Key: file_key,
             Body: file,
-            ContentType: file.type,
-            ACL: 'public-read'
         };
-        const upload =  s3.putObject(params).on('httpUploadProgress', evt => {
-            console.log('uploading to s3...', parseInt(((evt.loaded * 100) / evt.total).toString() + '%'))}).promise()
+        const upload = s3.putObject(params).on('httpUploadProgress', evt => {
+            console.log('uploading to s3...', parseInt(((evt.loaded * 100) / evt.total).toString())) + "%"}).promise()
 
             await upload.then((data) => {
                 console.log("succesfully uploaded to s3", file_key);
@@ -34,9 +32,14 @@ export async function uploadToS3(file: File) {
                 file_key,
                 file_name: file.name
             });
-        } catch (error) {}
+        } catch (error) {
+            console.log("error uploading to s3", error);
+            
+        }
     }
 
     export function getS3Url(file_key: string) {
-        return `https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com/${file_key}`;
+        const url = `https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com/${file_key}`;
+
+        return url;
     }
