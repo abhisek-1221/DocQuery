@@ -20,7 +20,7 @@ export default async function Home() {
             {isAuth && <Button className="bg-orange-700">View Chats</Button>}
           </div>
           <p className="text-slate-300 max-w-xl mt-1 text-lg">
-            Access document intelligence fo quick query resolution and <br /> deep understanding
+            Access document intelligence for quick query resolution and <br /> deep understanding
           </p>
           <div className="w-full mt-4">
             {isAuth ? (
