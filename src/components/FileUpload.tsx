@@ -45,7 +45,7 @@ const [uploading, setUploading] = React.useState(false);
                     }
                     mutate(data, {
                         onSuccess: (data) => {
-                            toast.success(data.message);
+                            // toast.success(data.message);
                             console.log("file uploaded", data);
                         },
                         onError: () => {
