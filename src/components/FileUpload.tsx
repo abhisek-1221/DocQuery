@@ -6,11 +6,12 @@ import { uploadToS3 } from '@/lib/s3';
 import { toast } from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { log } from 'console';
 
 
 const FileUpload = () => {
 const [uploading, setUploading] = React.useState(false);
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async ({
       file_key,
       file_name,
@@ -39,7 +40,9 @@ const [uploading, setUploading] = React.useState(false);
                 try {
                     setUploading(true);
                     const data = await uploadToS3(file);
-                    if(!data?.file_key || !data?.file_name) {
+                    console.log("data", data);
+                    
+                    if(!data?.file_key || !data.file_name) {
                         toast.error("Something went wrong");
                         return;
                     }
@@ -47,10 +50,11 @@ const [uploading, setUploading] = React.useState(false);
                         onSuccess: (data) => {
                             // toast.success(data.message);
                             console.log("file uploaded", data);
+                            toast.success("success");
                         },
-                        onError: () => {
+                        onError: (err) => {
                             toast.error("Error creating chat");
-                            console.log("error uploading file");
+                            console.log(err);
                         },
                     });
                     
@@ -70,7 +74,7 @@ const [uploading, setUploading] = React.useState(false);
         })}
       >
         <input {...getInputProps()} />
-        {uploading || isLoading ? (
+        {uploading || isPending ? (
           <>
             {/* loading state */}
             <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
@@ -111,4 +115,4 @@ const [uploading, setUploading] = React.useState(false);
 //   )
 // }
 
-export default FileUpload
+export default FileUpload;

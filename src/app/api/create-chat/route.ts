@@ -1,3 +1,4 @@
+import { messages } from "@/lib/db/schema";
 import { loadS3IntoPinecone } from "@/lib/pinecone";
 import { NextResponse } from "next/server";
 
