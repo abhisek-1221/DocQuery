@@ -7,9 +7,12 @@ import { toast } from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { log } from 'console';
+import { useRouter } from 'next/navigation';
+
 
 
 const FileUpload = () => {
+  const router = useRouter();
 const [uploading, setUploading] = React.useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
@@ -47,10 +50,11 @@ const [uploading, setUploading] = React.useState(false);
                         return;
                     }
                     mutate(data, {
-                        onSuccess: (data) => {
+                        onSuccess: ({chat_id}) => {
                             // toast.success(data.message);
                             console.log("file uploaded", data);
                             toast.success("success");
+                            router.push(`/chat/${chat_id}`);
                         },
                         onError: (err) => {
                             toast.error("Error creating chat");
