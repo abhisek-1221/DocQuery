@@ -6,7 +6,7 @@ const config = new Configuration({
 });
 const openai = new OpenAIApi(config);
 
-const rateLimiter = new RateLimiter(2, 60000); 
+const rateLimiter = new RateLimiter(3, 60000); 
 
 export async function getEmbeddings(text: string) {
   return new Promise<number[]>((resolve, reject) => {
