@@ -4,6 +4,7 @@ import { auth } from '@clerk/nextjs'
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import React from 'react'
+import ChatSideBar from '@/components/ChatSideBar'
 
 type Props = {
     params: {
@@ -28,7 +29,9 @@ export default async function ChatPage({params : {chatId}}: Props) {
         <div className="flex w-full max-h-screen overflow-scroll">
 
             {/* chat side bar */}
-            <div className='flex-[1] max-w-xs'></div>
+            <div className='flex-[1] max-w-xs'>
+                <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
+            </div>
             {/* pdf viewer */}
             <div className='max-h-screen p-4 overflow-scroll flex-[5]'>
 
@@ -38,11 +41,11 @@ export default async function ChatPage({params : {chatId}}: Props) {
 
             </div>
         </div>
-        <div
+        {/* <div
     className='absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] 
     bg-[size:20px_20px]'
     aria-hidden='true'
-/>
+/> */}
     </div>
   )
 };
