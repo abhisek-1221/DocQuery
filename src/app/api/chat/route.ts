@@ -2,7 +2,7 @@ import { getContext } from '@/lib/context';
 import { db } from '@/lib/db';
 import { createOpenAI } from '@ai-sdk/openai';
 import { StreamingTextResponse, streamText, StreamData, Message } from 'ai';
-import { chats } from '@/lib/db/schema';
+import { chats, messages as _messages } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 
@@ -51,9 +51,22 @@ export async function POST(req:Request){
         const data = new StreamData();
         
         const stream = response.toAIStream({
-            onCompletion(_){
-                data.close();
-            }
+            onStart: async () => {
+                // save user message into db
+                await db.insert(_messages).values({
+                  chatId,
+                  content: lastMessage.content,
+                  role: "user",
+                });
+              },
+              onCompletion: async (completion) => {
+                // save ai message into db
+                await db.insert(_messages).values({
+                  chatId,
+                  content: completion,
+                  role: "system",
+                });
+              },
             });
         return new StreamingTextResponse(stream, {}, data);
     } catch (error) {
