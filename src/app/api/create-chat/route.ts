@@ -5,7 +5,6 @@ import { loadS3IntoPinecone } from "@/lib/pinecone";
 import { getS3Url } from "@/lib/s3";
 import { NextResponse } from "next/server";
 
-// This is an API route. The code in this file will be executed when you make a POST request to /api/create-chat
 export async function POST(req: Request, res: Response) {
     const { userId } = await auth();
     if (!userId) {
