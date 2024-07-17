@@ -67,6 +67,9 @@ export async function POST(req:Request){
                   role: "system",
                 });
               },
+              onFinal(_) {
+                data.close();
+              },
             });
         return new StreamingTextResponse(stream, {}, data);
     } catch (error) {
