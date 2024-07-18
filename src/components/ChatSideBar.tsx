@@ -1,4 +1,3 @@
-"use client"
 
 import { DrizzleChat } from '@/lib/db/schema'
 import Link from 'next/link'
@@ -11,23 +10,11 @@ import axios from 'axios'
 type Props = {
     chats: DrizzleChat[],
     chatId: number,
+    isPro: boolean;
 }
 
 
 const ChatSideBar = (props: Props) => {
-    const [loading, setLoading] = React.useState(false);
-    const handleSubscription = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get('/api/stripe');
-            window.location.href = response.data.url;
-        } catch (error) {
-            console.log(error);
-        }
-        finally {
-            setLoading(false);
-        }
-    }
 
   return (
     <div className='w-full h-screen p-4 text-gray-200 bg-transparent'>
@@ -47,18 +34,6 @@ const ChatSideBar = (props: Props) => {
                         <MessageCircle className='mr-2' />
                         <p className='w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis'>{chat.pdfName}</p>
                     </div>
-
-                    <div className="absolute bottom-4 left-4">
-                        <div className='flex items-center gap-2 text-sm text-slate-500 flex-wrap'>
-                            <Link href='/'>Home</Link>
-                            <Link href='/'>Source</Link>
-                        </div>
-                        <Button className='mt-2 text-white bg-blue-600' 
-                        disabled={loading}
-                        onClick={handleSubscription}>
-                            Upgrade to Pro
-                        </Button>
-                    </div>
                 </Link>
             ))}
         </div>
@@ -66,4 +41,4 @@ const ChatSideBar = (props: Props) => {
   )
 }
 
-export default ChatSideBar
+export default ChatSideBar;

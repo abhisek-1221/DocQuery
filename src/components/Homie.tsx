@@ -4,10 +4,24 @@ import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
+import { checkSubscription } from '@/lib/subcription'
+import SubscriptionButton from '@/components/SubscriptionButton'
+import { ArrowRight } from 'lucide-react'
+import { db } from '@/lib/db'
+import { eq } from 'drizzle-orm'
+import { chats } from "@/lib/db/schema";
 
 export const Homie = async () => {
     const {userId} = await auth()
     const isAuth = !!userId
+    const isPro = await(checkSubscription())
+    let firstChat;
+  if (userId) {
+    firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
+    if (firstChat) {
+      firstChat = firstChat[0];
+    }
+  }
   return (
     <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
@@ -16,7 +30,18 @@ export const Homie = async () => {
           </div>
 
           <div className="flex mt-2">
-            {isAuth && <Button className="bg-orange-700">View Chats</Button>}
+            {isAuth && firstChat && (
+              <>
+                <Link href={`/chat/${firstChat.id}`}>
+                  <Button className='bg-orange-700'>
+                    Visit Chats <ArrowRight className="ml-2" />
+                  </Button>
+                </Link>
+                <div className="ml-3">
+                  <SubscriptionButton isPro={isPro} />
+                </div>
+              </>
+            )}
           </div>
           <p className="text-slate-300 max-w-xl mt-1 text-lg">
             Intelligent social bookmark by AI <br /> for better insights
