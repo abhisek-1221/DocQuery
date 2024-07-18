@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from './ui/input'
 import { useChat } from 'ai/react'
 import { Button } from './ui/button'
@@ -10,9 +10,9 @@ import axios from 'axios'
 import { Message } from 'ai/react'
 import { useQuery } from '@tanstack/react-query'
 
-type Props = {chatId: number}
+type Props = { chatId: number }
 
-const ChatComponent = ({chatId}: Props) => {
+const ChatComponent = ({ chatId }: Props) => {
   const { data, isLoading } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
@@ -25,51 +25,50 @@ const ChatComponent = ({chatId}: Props) => {
 
   const { input, handleInputChange, handleSubmit, messages } = useChat(
     {
-      api:'/api/chat',
+      api: '/api/chat',
       body: {
         chatId
-    },
-    initialMessages: data || [],
-  }
+      },
+      initialMessages: data || [],
+    }
   );
-  React.useEffect(() => {
+
+  useEffect(() => {
     const messageContainer = document.getElementById('message-container');
-    if(messageContainer) {
+    if (messageContainer) {
       messageContainer.scrollTo({
         top: messageContainer.scrollHeight,
         behavior: 'smooth',
       })
     }
-  }, [messages])
+  }, [messages]);
+
   return (
-    <div className='relative max-h-screen overflow-scroll' id='message-container'>
-      <div className='sticky top-0 inset-x-0 p-2 h-fit'>
+    <div className='relative flex flex-col h-full'>
+      <div className='flex-shrink-0 p-2 bg-gray-800'>
         <h3 className='text-xl font-bold text-white'>
           Chat Component
         </h3>
       </div>
 
-      <MessageList messages={messages} isLoading={isLoading} />
+      <div className='flex-1 overflow-y-auto' id='message-container'>
+        <MessageList messages={messages} isLoading={isLoading} />
+      </div>
 
-      <form onSubmit={handleSubmit}
-      className='sticky bottom-0 inset-x-0 px-2 py-4'>
+      <form onSubmit={handleSubmit} className='flex-shrink-0 p-4 bg-gray-800'>
         <div className='flex'>
-        <Input 
-        placeholder='Ask a question...'
-        className='w-full'
-        value={input}
-        onChange={handleInputChange}
-        />
-        <Button className='bg-blue-600 ml-2'>
-          <Send className='h-4 w-4' />
-        </Button>
+          <Input
+            placeholder='Ask a question...'
+            className='w-full'
+            value={input}
+            onChange={handleInputChange}
+          />
+          <Button type='submit' className='bg-blue-600 ml-2'>
+            <Send className='h-4 w-4' />
+          </Button>
         </div>
       </form>
     </div>
-
-
-    
-
   )
 }
 

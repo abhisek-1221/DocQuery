@@ -15,8 +15,8 @@ type Props = {
     }
 }
 
-export default async function ChatPage({params : {chatId}}: Props) {
-    const {userId} = await auth();
+export default async function ChatPage({ params: { chatId } }: Props) {
+    const { userId } = await auth();
     if (!userId) {
         return redirect('/sign-in')
     }
@@ -24,36 +24,37 @@ export default async function ChatPage({params : {chatId}}: Props) {
     if (!_chats) {
         return redirect('/');
     }
-    if(!_chats.find((chat) => chat.id === parseInt(chatId))) {
+    if (!_chats.find((chat) => chat.id === parseInt(chatId))) {
         return redirect('/');
     }
     const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
     const isPro = await checkSubscription();
-  return (
-    <>
-    <div className='flex max-h-screen overflow-scroll'>
-        <div className="flex w-full max-h-screen overflow-scroll">
 
-            {/* chat side bar */}
-            <div className='flex-[1] max-w-xs'>
+    return (
+        <div className="flex h-screen overflow-hidden">
+            {/* Chat Sidebar */}
+            <div className="flex-shrink-0 w-1/5 bg-slate-900 border-r">
                 <ChatSideBar chats={_chats} chatId={parseInt(chatId)} isPro={isPro} />
             </div>
-            {/* pdf viewer */}
-            <div className='max-h-screen p-4 overflow-scroll flex-[5]'>
-            <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+            {/* Main Content */}
+            <div className="flex flex-1 flex-col overflow-hidden">
+                <div className="flex flex-1 overflow-hidden">
+                    {/* PDF Viewer */}
+                    <div className="flex-1 overflow-auto p-4 bg-slate-900">
+                        <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+                    </div>
+                    {/* Chat Component */}
+                    <div className="flex-shrink-0 w-2/5 border-l bg-transparent">
+                        <ChatComponent chatId={parseInt(chatId)} />
+                    </div>
+                </div>
             </div>
-            {/* chat component */}
-            <div className='flex-[3] border-1-4 border-1-slate-200'>
-            <ChatComponent chatId={parseInt(chatId)} />
-            </div>
+            {/* Background Pattern */}
+            <div
+                className="absolute top-0 left-0 z-[-2] h-screen w-screen bg-black bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] 
+                bg-[size:20px_20px]"
+                aria-hidden="true"
+            />
         </div>
-        <div
-    className='absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] 
-    bg-[size:20px_20px]'
-    aria-hidden='true'
-    />
-    </div>
-    </>
-    
-  )
+    )
 };
