@@ -45,9 +45,9 @@ const ChatComponent = ({ chatId }: Props) => {
 
   return (
     <div className='relative flex flex-col h-full'>
-      <div className='flex-shrink-0 p-2 bg-gray-800'>
+      <div className='flex-shrink-0 p-2 bg-transparent'>
         <h3 className='text-xl font-bold text-white'>
-          Chat Component
+          Chat
         </h3>
       </div>
 

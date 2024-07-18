@@ -40,12 +40,12 @@ export default async function ChatPage({ params: { chatId } }: Props) {
             <div className="flex flex-1 flex-col overflow-hidden">
                 <div className="flex flex-1 overflow-hidden">
                     {/* PDF Viewer */}
-                    <div className="flex-1 overflow-auto p-4 bg-slate-900">
-                        <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
-                    </div>
+                    <div className="flex-1 overflow-auto p-4 bg-transparent">
+                        <ChatComponent chatId={parseInt(chatId)} />
+                    </div> 
                     {/* Chat Component */}
                     <div className="flex-shrink-0 w-2/5 border-l bg-transparent">
-                        <ChatComponent chatId={parseInt(chatId)} />
+                    <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
                     </div>
                 </div>
             </div>
