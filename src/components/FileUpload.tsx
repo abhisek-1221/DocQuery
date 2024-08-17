@@ -89,7 +89,7 @@ const [uploading, setUploading] = React.useState(false);
         ) : (
           <>
             <Inbox className="w-10 h-10 text-blue-500" />
-            <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
+            <p className="mt-2 text-sm text-slate-400">Drop Reports PDF Here</p>
           </>
         )}
       </div>

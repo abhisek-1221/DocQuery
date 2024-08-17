@@ -25,7 +25,7 @@ export const Homie = async () => {
   return (
     <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
-          <h1 className="mr-3 text-5xl font-semibold text-white">AI Intelligence with <span className="text-purple-300">NoteTaking</span></h1>
+          <h1 className="mr-3 text-5xl font-semibold text-white">Smart AI for <span className="text-purple-300">Thrift Stores</span></h1>
           <UserButton afterSignOutUrl="/" />
           </div>
 
@@ -44,7 +44,8 @@ export const Homie = async () => {
             )}
           </div>
           <p className="text-slate-300 max-w-xl mt-1 text-lg">
-            Intelligent social bookmark by AI <br /> for better insights
+          AI-Driven Sentiment Analysis 
+          <br /> and Actionable Insights
           </p>
           <div className="w-full mt-4">
             {isAuth ? (

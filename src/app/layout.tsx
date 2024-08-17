@@ -4,12 +4,13 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Providers from "@/components/Providers";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "@/components/themeprovider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DocQuery",
-  description: "RAG based document search engine LLM",
+  title: "EcomEllite",
+  description: "RAG based Ecommerce search engine LLM",
 };
 
 export default function RootLayout({
@@ -18,6 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <ClerkProvider>
       <Providers>
       <html lang="en">
@@ -26,6 +28,7 @@ export default function RootLayout({
       </html>
       </Providers>
     </ClerkProvider>
+
    
   );
 }
