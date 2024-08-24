@@ -8,7 +8,7 @@ export const Radar = ({ className }: any) => {
   return (
     <div
       className={twMerge(
-        "relative flex h-20 w-20 items-center justify-center rounded-full  ",
+        "relative flex h-20 w-20 items-center justify-center rounded-full",
         className
       )}
     >
@@ -16,7 +16,7 @@ export const Radar = ({ className }: any) => {
         style={{
           transformOrigin: "right center",
         }}
-        className="absolute right-1/2 top-1/2  z-40 flex h-[5px]
+        className="absolute right-1/2 top-1/2 z-40 flex h-[5px]
         overflow-hidden animate-radar-spin w-[400px]  items-end justify-center bg-transparent"
       >
       {/* Radar line that rotates */}

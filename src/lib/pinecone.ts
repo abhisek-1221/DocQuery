@@ -32,12 +32,8 @@ export async function loadS3IntoPinecone(fileKey: string) {
 
   // 2 split and segment the pdf
   const documents = await Promise.all(pages.map(prepareDocumentForPinecone));
-    console.log("step 2 split and segment the pdf:", documents.length, documents);
-    
     // 3. vectorize and embed the individual segments
-    const vectors = await Promise.all(documents.flat().map(embedDocument));
-    console.log("step 3 vectorize and embed the individual segments", vectors.length, vectors);
-    
+    const vectors = await Promise.all(documents.flat().map(embedDocument));  
 
     // 4. upload the vectors to pinecone
     const client = await getPineconeClient();
@@ -57,8 +53,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
       try {
         const embeddings = await getEmbeddings(doc.pageContent);
         const hash = md5(doc.pageContent);
-        console.log("embedding document", hash, embeddings.length, doc.metadata.pageNumber, doc.metadata.text);
-        
+  
         return {
           id: hash,
           values: embeddings,
@@ -93,7 +88,6 @@ async function prepareDocumentForPinecone(page: PDFPage) {
           }
         })
       ]);
-      console.log("splitting document",docs);
       
       return docs;
 }

@@ -74,10 +74,10 @@ const config = {
         },
         "radar-spin": {
           from: {
-            transform: "rotate(20deg)",
+            transform: "rotate(10deg)",
           },
           to: {
-            transform: "rotate(380deg)",
+            transform: "rotate(180deg)",
           },
         },
       },

@@ -33,20 +33,16 @@ export default async function ChatPage({ params: { chatId } }: Props) {
     return (
         <div className="flex h-screen overflow-hidden">
             {/* Chat Sidebar */}
-            <div className="flex-shrink-0 w-1/5 bg-slate-900 border-r">
+            <div className="flex-shrink-0 w-1/5 bg-transparent border-r border-dashed border-opacity-5">
                 <ChatSideBar chats={_chats} chatId={parseInt(chatId)} isPro={isPro} />
             </div>
             {/* Main Content */}
             <div className="flex flex-1 flex-col overflow-hidden">
                 <div className="flex flex-1 overflow-hidden">
-                    {/* PDF Viewer */}
-                    <div className="flex-1 overflow-auto p-4 bg-transparent">
-                        <ChatComponent chatId={parseInt(chatId)} />
-                    </div> 
                     {/* Chat Component */}
-                    <div className="flex-shrink-0 w-2/5 border-l bg-transparent">
-                    <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
-                    </div>
+                    <div className="flex-1 overflow-auto p-4 bg-transparent">
+                        <ChatComponent chatId={parseInt(chatId)} pdfUrl={currentChat?.pdfUrl || ''} />
+                    </div> 
                 </div>
             </div>
             {/* Background Pattern */}

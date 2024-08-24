@@ -34,7 +34,7 @@ export async function POST(req:Request){
           ${context}
           END OF CONTEXT BLOCK
           AI assistant will integrate any CONTEXT BLOCK that is provided to offer the most relevant and precise analysis.
-          If the context does not include the answer to a question, the AI assistant will say, "I'm sorry, but I don't have the information to answer that question."
+          If the context does not include the answer to a question, the AI assistant will say, "I'm sorry, but I don't have the information to answer that question." However the AI assistant will still provide the best possible response based on the information available.
           AI assistant will not apologize for previous responses but will indicate that new data has been considered.
           AI assistant will only draw from the provided context and will not fabricate information.
           `,

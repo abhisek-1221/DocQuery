@@ -6,28 +6,38 @@ import React from 'react';
 
 export default async function Home() {
   return (
-    <div className="relative w-screen min-h-screen">
+    <div className="relative w-full overflow-hidden">
+      {/* Background */}
       <div
-        className="absolute top-0 left-0 z-[-2] h-full w-full bg-[#000000] 
+        className="absolute top-0 left-0 z-[-2] h-full w-full bg-[#000000]
         bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"
         aria-hidden="true"
       />
-      <div className="flex items-center justify-center">
+      
+      {/* Gradient Text Demo */}
+      <div className="flex items-center justify-center dark">
         <AnimatedGradientTextDemo />
       </div>
-      <div className="relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="flex flex-col items-center gap-6 pb-8 pt-20 lg:pt-32 text-center">
+      
+      {/* Main Content Grid */}
+      <div className="relative px-4 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start lg:items-center">
+          {/* Homie Component */}
+          <div className="flex flex-col items-center gap-6 text-center">
             <Homie />
           </div>
-          <div className="max-h-[500px] min-h-[500px] overflow-hidden [mask-image:linear-gradient(to_bottom,white,white,transparent)] ml-10 pb-8 lg:pt-32">
+          
+          {/* Animated List Demo */}
+          <div className="max-h-[500px] min-h-[500px] overflow-hidden [mask-image:linear-gradient(to_bottom,white,white,transparent)]">
             <div className="flex flex-col items-center gap-4">
               <AnimatedListDemo />
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-20">
+
+      {/* Radar Preview Section */}
+      <div className="mt-20 overflow-hidden px-4 md:px-8">
         <RadarPreview />
       </div>
     </div>

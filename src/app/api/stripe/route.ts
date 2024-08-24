@@ -23,6 +23,7 @@ export async function GET() {
           customer: _userSubscriptions[0].stripeCustomerId,
           return_url,
         });
+        
         return NextResponse.json({ url: stripeSession.url });
       }
   

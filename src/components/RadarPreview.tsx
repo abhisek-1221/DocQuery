@@ -10,17 +10,17 @@ import {Radar} from './Radar'
 const RadarPreview = () => {
   return (
     <div className="relative flex h-96 w-full flex-col items-center justify-center space-y-4 overflow-hidden px-4">
-    <div className="mx-auto w-full max-w-3xl">
-      <div className="flex w-full  items-center justify-center space-x-10 md:justify-between md:space-x-0 ">
-        <IconContainer text="Web Development" delay={0.2} />
+    <div className="mx-auto w-full max-w-2xl">
+      <div className="flex w-full items-center justify-center space-x-10 md:justify-between md:space-x-0 ">
+        <IconContainer text="Conversions" delay={0.2} />
         <IconContainer
-          delay={0.4}
-          text="Mobile apps"
+          delay={0.1}
+          text="Metrics"
           icon={<AiFillDollarCircle className=" h-8 w-8 text-slate-600" />}
         />
         <IconContainer
-          text="Designing"
-          delay={0.3}
+          text="Traffic"
+          delay={0.1}
           icon={<BsClipboardDataFill className=" h-8 w-8 text-slate-600" />}
         />
       </div>
@@ -28,28 +28,28 @@ const RadarPreview = () => {
     <div className="mx-auto w-full max-w-md">
       <div className="flex w-full items-center justify-center space-x-10 md:justify-between md:space-x-0 ">
         <IconContainer
-          text="Maintenence"
-          delay={0.5}
+          text="Inventory"
+          delay={0.1}
           icon={<BiSolidReport className=" h-8 w-8 text-slate-600" />}
         />
         <IconContainer
-          text="Server management"
+          text="Reports"
           icon={
             <HiDocumentReport className=" h-8 w-8 text-slate-600" />
           }
-          delay={0.8}
+          delay={0.1}
         />
       </div>
     </div>
     <div className="mx-auto w-full max-w-3xl">
       <div className="flex w-full items-center justify-center space-x-10 md:justify-between md:space-x-0 ">
         <IconContainer
-          delay={0.6}
-          text="GitHub Integration"
+          delay={0.1}
+          text="Sales"
           icon={<HiDocumentReport className=" h-8 w-8 text-slate-600" />}
         />
         <IconContainer
-          delay={0.7}
+          delay={0.1}
           text="CMS Integration"
           icon={<RiFilePaper2Fill className=" h-8 w-8 text-slate-600" />}
         />

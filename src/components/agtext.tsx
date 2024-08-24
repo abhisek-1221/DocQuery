@@ -10,7 +10,7 @@ export async function AnimatedGradientTextDemo() {
         📈 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-black" />{" "}
         <span
           className={cn(
-            `inline animate-gradient bg-gradient-to-r from-[#e1e18d] via-[#c5a9e4] to-[#e9aa8f] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent text-3xl`,
+            `inline animate-gradient bg-gradient-to-r from-[#e1e18d] via-[#c5a9e4] to-[#e9aa8f] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent text-xs sm:text-xs md:text-lg lg:text-xl`,
           )}
         >
           Introducing EcomEllite
