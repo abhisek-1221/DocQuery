@@ -2,7 +2,44 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageSquare, Plus, Search, Folder, Star, Archive, Settings, HelpCircle, Send, Download, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { MessageSquare, Plus, Search, Folder, Star, Archive, Settings, HelpCircle, Send, Download, RefreshCw } from 'lucide-react';
+
+const data = [
+  { name: 'May', value: 90000 },
+  { name: 'Jun', value: 85000 },
+  { name: 'Jul', value: 82000 },
+  { name: 'Aug', value: 78000 },
+  { name: 'Sep', value: 75000 },
+];
+const BarChart = ({ data }: { data: { name: string; value: number }[] }) => {
+  const maxValue = Math.max(...data.map(d => d.value));
+  const barWidth = 100 / data.length;
+
+  return (
+    <svg viewBox="0 0 100 50" className="w-full h-full">
+      {data.map((item, index) => (
+        <g key={index}>
+          <rect
+            x={index * barWidth}
+            y={50 - (item.value / maxValue) * 50}
+            width={barWidth - 1}
+            height={(item.value / maxValue) * 50}
+            fill="#8884d8"
+          />
+          <text
+            x={index * barWidth + barWidth / 2}
+            y="52"
+            textAnchor="middle"
+            fontSize="3"
+            fill="white"
+          >
+            {item.name}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+};
 
 const ChatUI = () => {
   return (
@@ -42,8 +79,8 @@ const ChatUI = () => {
             <span>Help</span>
           </div>
           <div className="flex items-center p-3">
-            <img src="/api/placeholder/40/40" alt="User" className="w-10 h-10 rounded-full mr-3" />
-            <span>Brooklyn Simmons</span>
+            <img src="https://avatars.githubusercontent.com/u/110292494?v=4" alt="User" className="w-10 h-10 rounded-full mr-3" />
+            <span>Abhisek Sahoo</span>
           </div>
         </div>
       </div>
@@ -56,19 +93,27 @@ const ChatUI = () => {
         <ScrollArea className="flex-1 p-6">
           <div className="space-y-6">
             <div className="flex items-start">
-              <img src="/api/placeholder/40/40" alt="User" className="w-10 h-10 rounded-full mr-3" />
+              <img src="https://avatars.githubusercontent.com/u/110292494?v=4" alt="User" className="w-10 h-10 rounded-full mr-3" />
               <div className="bg-white bg-opacity-10 rounded-2xl p-4 max-w-[80%]">
-                <p>Write a 100-character meta description for my blog post about digital marketing.</p>
+                <p>From the submitted data generate Dashboard analytics of sales report of past 5 months & update traffic in CMS</p>
               </div>
             </div>
             <div className="flex items-start justify-end">
-              <div className="bg-gray-700 bg-opacity-70 rounded-2xl p-4 max-w-[80%]">
-                <p>Master the art of digital marketing with expert strategies for online success. Unlock growth now!</p>
+              
+              <div className="bg-gray-700 bg-opacity-70 rounded-2xl p-4 max-w-[80%] w-full">
+                <p className='font-mono'>Hold on! Generating Dashboard Analytics....</p>
+                <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-4">
+                  <h2 className="text-xl font-semibold mb-2">Monthly Spending</h2>
+                  <p className="text-3xl font-bold mb-1">$83,465</p>
+                  <p className="text-sm text-gray-400 mb-4">Current Balance</p>
+                  <p className="text-sm mb-2">Past 5 months</p>
+                  <p className="text-sm text-gray-400 mb-4">May - September</p>
+                  <div className="w-full h-48">
+                    <BarChart data={data} />
+                  </div>
+                </div>
+                <p className="text-sm text-gray-400">Last Updated 26 June, 2024</p>
               </div>
-              {/* <div className="flex flex-col ml-3">
-                <ThumbsUp className="h-5 w-5 mb-2 cursor-pointer hover:text-purple-400 transition-colors duration-300" />
-                <ThumbsDown className="h-5 w-5 cursor-pointer hover:text-purple-400 transition-colors duration-300" />
-              </div> */}
             </div>
           </div>
         </ScrollArea>
