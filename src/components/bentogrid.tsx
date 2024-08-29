@@ -112,7 +112,7 @@ export const SkeletonOne = () => {
         <div className="flex flex-1 w-full h-full flex-col space-y-2  ">
           {/* TODO */}
           <Image
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src="/sample.jpg"
             alt="header"
             width={800}
             height={800}
@@ -153,10 +153,10 @@ export const SkeletonThree = () => {
 
 export const SkeletonTwo = () => {
   const images = [
+    "/sample2.png",
+    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "/sample.jpg",
-    "/sample.jpg",
-    "/sample.jpg",
-    "/sample.jpg",
+    "/sample2.png",
     "/sample.jpg",
   ];
 

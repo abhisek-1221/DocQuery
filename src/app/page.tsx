@@ -2,6 +2,7 @@ import { AnimatedGradientTextDemo } from '@/components/agtext';
 import { AnimatedListDemo } from '@/components/Animatedlist';
 import { FeaturesSectionDemo } from '@/components/bentogrid';
 import { Homie } from '@/components/Homie';
+import PricingPage from '@/components/pricing';
 import RadarPreview from '@/components/RadarPreview';
 import React from 'react';
 
@@ -40,8 +41,11 @@ export default async function Home() {
       <div className="mt-20 overflow-hidden px-4 md:px-8">
         <RadarPreview />
       </div>
-      <div>
+      <div className='flex justify-center items-center'>
         <FeaturesSectionDemo />
+      </div>
+      <div className='flex justify-center items-center'>
+        <PricingPage />
       </div>
     </div>
   );
