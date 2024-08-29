@@ -11,7 +11,7 @@ export default async function Home() {
     <div className="relative w-full overflow-hidden">
       {/* Background */}
       <div
-        className="absolute top-0 left-0 z-[-2] h-full w-full bg-gradient-to-b from-slate-900 to-black"
+        className="absolute top-0 left-0 z-[-2] h-full w-full bg-[radial-gradient(ellipse_70%_30%_at_40%_-20%,rgba(240,67,12,0.4),rgba(18,10,9,1))]"
         aria-hidden="true"
       />
       
