@@ -40,7 +40,7 @@ const ChatSideBar = (props: Props) => {
             ))}
         {props.chats.map((chat) => (
           <Link href={`/chat/${chat.id}`} key={chat.id}>
-            <div className={cn("rounded-lg p-3 text-slate-300 flex items-center", {
+            <div className={cn("rounded-lg p-4 space-y-1 mt-1 text-slate-300 flex items-center", {
               'bg-stone-600 text-white': chat.id === props.chatId,
               'hover:text-white hover:bg-white hover:bg-opacity-10': chat.id !== props.chatId,
             })}>

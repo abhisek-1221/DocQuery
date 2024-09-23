@@ -1,8 +1,7 @@
 import React from 'react'
 import { Message } from 'ai/react'
-import { messages } from '@/lib/db/schema'
 import { cn } from '@/lib/utils'
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react"
 
 type Props = {
     isLoading: boolean,
@@ -23,15 +22,24 @@ const MessageList = ({messages, isLoading}: Props) => {
             {messages.map(message => {
                 return(
                     <div key={message.id} 
-                        className={cn('flex', {
-                            'justify-end pl-10': message.role === 'user',
-                            'justify-start pr-10': message.role === 'assistant',
+                        className={cn('flex items-end gap-2', {
+                            'flex-row-reverse': message.role === 'user',
                         })}
                     >
+                        <div className="flex-shrink-0">
+                            <img 
+                                src={message.role === 'user' 
+                                    ? "https://openclipart.org/image/800px/247320" 
+                                    : "https://st3.depositphotos.com/16023852/18610/v/450/depositphotos_186100106-stock-illustration-letters-logo-dark-background.jpg"
+                                } 
+                                alt={message.role === 'user' ? "User Avatar" : "AI Assistant Avatar"}
+                                className="w-10 h-10 rounded-full border-2 border-white shadow-md"
+                            />
+                        </div>
                         <div className={
-                            cn("rounded-2xl px-4 py-2 text-sm shadow-xl backdrop-blur-md backdrop-filter", {
+                            cn("rounded-2xl px-4 py-2 text-sm shadow-xl backdrop-blur-md backdrop-filter max-w-[80%]", {
                                 "bg-stone-500 bg-opacity-20 text-white border border-stone-300 border-opacity-30": message.role === 'user',
-                                "bg-gray-600 bg-opacity-20 text-white border border-gray-400 border-opacity-30": message.role === 'assistant',
+                                "bg-stone-900 bg-opacity-20 text-white border border-gray-400 border-opacity-30": message.role === 'assistant',
                             })
                         }>
                             <p className="drop-shadow-2xl text-base">
