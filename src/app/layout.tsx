@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/components/themeprovider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EcomEllite",
+  title: "ThriftWise",
   description: "RAG based Ecommerce search engine LLM",
 };
 

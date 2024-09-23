@@ -24,7 +24,7 @@ export const IconContainer = ({ icon, text, delay }: any) => {
         "relative z-50 flex flex-col items-center justify-center space-y-2"
       )}
     >
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-700 bg-slate-800 shadow-inner">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-700 bg-stone-900 shadow-inner">
         {icon || <HiDocumentText className="  h-8 w-8 text-slate-600" />}
       </div>
       <div className="hidden rounded-md px-2 py-1 md:block">

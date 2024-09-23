@@ -27,7 +27,7 @@ export function FeaturesSectionDemo() {
       className: "border-b col-span-1 lg:col-span-2 border-neutral-800",
     },
     {
-      title: "Check out our YouTube channel",
+      title: "Check out our Product on Youtube",
       description:
         "Whether its you or any other thrift stores, you can get to know about our product on YouTube",
       skeleton: <SkeletonThree />,

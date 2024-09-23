@@ -44,7 +44,7 @@ export const Homie = async () => {
             )}
           </div>
           <p className="text-slate-300 max-w-xl mt-1 text-lg">
-          AI-Driven Sentiment Analysis 
+          AI-Driven CMS Analytics 
           <br /> and Actionable Insights
           </p>
           <div className="w-full mt-4">

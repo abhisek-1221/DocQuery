@@ -1,6 +1,6 @@
 import { db } from '@/lib/db'
 import { chats } from '@/lib/db/schema'
-import { auth } from '@clerk/nextjs'
+import { auth, currentUser } from '@clerk/nextjs'
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -8,6 +8,7 @@ import ChatSideBar from '@/components/ChatSideBar'
 import PDFViewer from '@/components/PDFViewer'
 import ChatComponent from '@/components/ChatComponent'
 import { checkSubscription } from '@/lib/subcription'
+
 
 type Props = {
     params: {
@@ -21,6 +22,7 @@ export default async function ChatPage({ params: { chatId } }: Props) {
         return redirect('/sign-in')
     }
     const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
+    const user  = await currentUser();
     if (!_chats) {
         return redirect('/');
     }
@@ -31,14 +33,13 @@ export default async function ChatPage({ params: { chatId } }: Props) {
     const isPro = await checkSubscription();
 
     return (
-        <div className="flex h-screen overflow-hidden">
-            {/* Chat Sidebar */}
-            <div className="flex-shrink-0 w-1/5 bg-transparent border-r border-dashed border-opacity-5">
-                <ChatSideBar chats={_chats} chatId={parseInt(chatId)} isPro={isPro} />
+        <div className="flex h-screen bg-gradient-to-br from-stone-900 via-[#120a09] to-black text-gray-100 p-4">            
+        {/* Chat Sidebar */}
+        <div className="w-64 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl p-3 mr-4 flex flex-col">
+                <ChatSideBar chats={_chats} chatId={parseInt(chatId)} isPro={isPro} userName={user?.firstName || ''} />
             </div>
             {/* Main Content */}
-            <div className="flex flex-1 flex-col overflow-hidden">
-                <div className="flex flex-1 overflow-hidden">
+            <div className="flex-1 flex flex-col bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl overflow-hidden">  <div className="flex flex-1 overflow-hidden">
                     {/* Chat Component */}
                     <div className="flex-1 overflow-auto p-4 bg-transparent">
                         <ChatComponent chatId={parseInt(chatId)} pdfUrl={currentChat?.pdfUrl || ''} />
