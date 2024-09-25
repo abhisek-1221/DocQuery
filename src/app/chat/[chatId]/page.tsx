@@ -5,10 +5,8 @@ import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import ChatSideBar from '@/components/ChatSideBar'
-import PDFViewer from '@/components/PDFViewer'
 import ChatComponent from '@/components/ChatComponent'
 import { checkSubscription } from '@/lib/subcription'
-
 
 type Props = {
     params: {
