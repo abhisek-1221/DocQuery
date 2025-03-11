@@ -38,10 +38,10 @@ export async function GET() {
         line_items: [
           {
             price_data: {
-              currency: "USD",
+              currency: "INR",
               product_data: {
-                name: "EcomElite Pro",
-                description: "Unlimited chat and PDF sessions with 24*7 Dashboard access!",
+                name: "Thriftwise",
+                description: "Unlimited chat and web search with 24*7 Dashboard access!",
               },
               unit_amount: 2000,
               recurring: {

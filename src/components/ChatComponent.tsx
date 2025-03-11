@@ -10,6 +10,7 @@ import axios from 'axios'
 import { Message } from 'ai/react'
 import { useQuery } from '@tanstack/react-query'
 import { DialogDemo } from './pdfmodal'
+import { PromptInputWithActions } from './PromptInput'
 
 type Props = {
   chatId: number
@@ -48,14 +49,14 @@ export default function ChatComponent({ chatId, pdfUrl }: Props) {
     }
   }, [messages])
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsAssistantTyping(true)
     handleSubmit(e)
   }
 
   return (
-    <div className="relative flex flex-col bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl overflow-hidden h-[90vh] w-full sm:w-[90vw] max-w-6xl mx-auto shadow-2xl border border-gray-200 border-opacity-20">
+    <div className="relative flex flex-col bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl overflow-hidden h-[90vh] w-full sm:w-[90vw] max-w-5xl mx-auto shadow-2xl shadow-stone-400 border border-gray-200 border-opacity-20">
       {/* Chat Header */}
       <div className="flex p-3 sm:p-6 backdrop-filter backdrop-blur-3xl rounded-t-lg border-b border-gray-200 border-opacity-20 justify-between items-center bg-gradient-to-r from-stone-900 to-black">
         <div>
@@ -86,24 +87,15 @@ export default function ChatComponent({ chatId, pdfUrl }: Props) {
 
       {/* Input and Button Container */}
       <form onSubmit={handleFormSubmit} className="flex-shrink-0 p-3 sm:p-6 bg-gradient-to-r from-stone-900 via-[#0a0303] to-black rounded-b-lg border-t border-gray-200 border-opacity-20">
-        <div className="flex items-center">
-          <Input 
-            placeholder="Enter a prompt here..." 
-            className="flex-1 mr-2 sm:mr-4 rounded-full py-2 sm:py-3 px-4 sm:px-6 text-base sm:text-lg bg-white bg-opacity-20 border-none focus:ring-2 focus:ring-white focus:bg-opacity-30 transition-all duration-300 text-white placeholder-gray-300"
-            value={input}
-            onChange={handleInputChange}
-          />
-          <Button 
-            size="sm" 
-            type="submit" 
-            className="rounded-full bg-[#231513] hover:bg-opacity-80 transition-colors duration-300 px-4 sm:px-6 py-2 sm:py-3"
-            disabled={isAssistantTyping}
-          >
-            <Send className="h-4 w-4 sm:h-6 sm:w-6 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Send</span>
-          </Button>
-        </div>
+              <PromptInputWithActions 
+          input={input}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleFormSubmit}
+          isAssistantTyping={isAssistantTyping}
+            />
       </form>
+
     </div>
   )
 }
+
