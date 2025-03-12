@@ -1,14 +1,17 @@
 import { getContext } from '@/lib/context';
 import { db } from '@/lib/db';
 import { createOpenAI } from '@ai-sdk/openai';
-import { StreamingTextResponse, streamText, StreamData, Message } from 'ai';
+import {  streamText, StreamData, Message } from 'ai';
 import { chats, messages as _messages } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
+import { groq } from '@ai-sdk/groq';
+
 
 const openai = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-    compatibility: 'strict', // strict mode, enable when using the OpenAI API
+    compatibility: 'strict',
+   // strict mode, enable when using the OpenAI API
   });
 
 export async function POST(req:Request){
@@ -42,38 +45,40 @@ export async function POST(req:Request){
       
 
         const response = await streamText({
-            model: openai('gpt-3.5-turbo'),
+          model: openai("gpt-3.5-turbo"), 
             messages: [
                 prompt,
                 ...messages.filter((message: Message) => message.role === "user"),
               ],
+              onFinish: async (completion) => {
+                try{                  
+                  // save user message into db
+                      const lastMessage = messages[messages.length - 1];
+                      await db.insert(_messages).values({
+                        chatId,
+                        content: lastMessage.content,
+                        role: "user",
+                      });
+                  // save ai message into db
+                  await db.insert(_messages).values({
+                    chatId,
+                    content: completion.text,
+                    role: "system",
+                  });
+                }
+                
+
+                catch (error) {
+                  console.error('Error saving to database:', error);
+                }
+              },
+
         })
-        
-        const data = new StreamData();
-        
-        const stream = response.toAIStream({
-            onStart: async () => {
-                // save user message into db
-                await db.insert(_messages).values({
-                  chatId,
-                  content: lastMessage.content,
-                  role: "user",
-                });
-              },
-              onCompletion: async (completion) => {
-                // save ai message into db
-                await db.insert(_messages).values({
-                  chatId,
-                  content: completion,
-                  role: "system",
-                });
-              },
-              onFinal(_) {
-                data.close();
-              },
-            });
-        return new StreamingTextResponse(stream, {}, data);
-    } catch (error) {
-        console.log("error in chat/route.ts",error);
+                
+        return response.toDataStreamResponse();
+    } 
+    catch (error) {
+        console.error('Error:', error);
+        return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
 }
