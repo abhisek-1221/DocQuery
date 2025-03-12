@@ -27,9 +27,9 @@ export function FeaturesSectionDemo() {
       className: "border-b col-span-1 lg:col-span-2 border-neutral-800",
     },
     {
-      title: "Check out our Product on Youtube",
+      title: "Check out our Product",
       description:
-        "Whether its you or any other thrift stores, you can get to know about our product on YouTube",
+        "Whether its you or any other thrift stores, you can get to know about our product ",
       skeleton: <SkeletonThree />,
       className:
         "col-span-1 lg:col-span-3 lg:border-r border-neutral-800",
@@ -130,7 +130,7 @@ export const SkeletonOne = () => {
 export const SkeletonThree = () => {
   return (
     <Link
-      href="https://youtu.be/WGVxAmmJUmY?feature=shared"
+      href="https://www.tella.tv/video/abhiseks-video-e8yy"
       target="__blank"
       className="relative flex gap-10  h-full group/image"
     >
