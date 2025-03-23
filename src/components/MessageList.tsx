@@ -1,5 +1,6 @@
 import React from 'react'
 import { Message } from 'ai/react'
+import ReactMarkdown from 'react-markdown'
 import { cn } from '@/lib/utils'
 import { Loader2 } from "lucide-react"
 
@@ -41,10 +42,13 @@ const MessageList = ({messages, isLoading}: Props) => {
                                 "bg-stone-500 bg-opacity-20 text-white border border-stone-300 border-opacity-30": message.role === 'user',
                                 "bg-stone-900 bg-opacity-20 text-white border border-gray-400 border-opacity-30": message.role === 'assistant',
                             })
-                        }>
-                            <p className="drop-shadow-2xl text-base">
-                                {message.content}
-                            </p>
+                        }> 
+                        <p className="drop-shadow-2xl text-base prose prose-invert">
+                                <ReactMarkdown>
+                                    {message.content}
+                                </ReactMarkdown>
+                        </p>
+                                
                         </div>
                     </div>
                 )
