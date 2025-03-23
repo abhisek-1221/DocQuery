@@ -72,7 +72,7 @@ export function NavDocuments({
                   <span>Share</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem variant="destructive">
                   <IconTrash />
                   <span>Delete</span>
                 </DropdownMenuItem>
