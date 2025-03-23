@@ -223,19 +223,19 @@ export function ChartAreaInteractive() {
                 />
                 <stop
                   offset="95%"
-                  stopColor="yellow"
+                  stopColor="red"
                   stopOpacity={0.1}
                 />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="green"
+                  stopColor="red"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="yellow"
+                  stopColor="pink"
                   stopOpacity={0.1}
                 />
               </linearGradient>
