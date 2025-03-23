@@ -34,40 +34,48 @@ const [uploading, setUploading] = React.useState(false);
             accept: { "application/pdf": [".pdf"] },
             maxFiles: 1,
             onDrop: async (acceptedFiles) => {
-                const file = acceptedFiles[0];
-                if (file.size > 10 * 1024 * 1024) {
-                    // bigger than 10mb!
-                    toast.error("File too large");
-                    return;
+              console.log("Accepted Files:", acceptedFiles); 
+              const file = acceptedFiles[0];
+              if (!file) {
+                toast.error("No file detected");
+                return;
+              }
+              console.log("Uploading:", file.name, file.size);
+            
+              if (file.size > 10 * 1024 * 1024) {
+                toast.error("File too large");
+                return;
+              }
+            
+              try {
+                setUploading(true);
+                const data = await uploadToS3(file);
+                console.log("S3 Response:", data);
+            
+                if (!data?.file_key || !data.file_name) {
+                  toast.error("Something went wrong");
+                  return;
                 }
-                try {
-                    setUploading(true);
-                    const data = await uploadToS3(file);
-                    console.log("data", data);
-                    
-                    if(!data?.file_key || !data.file_name) {
-                        toast.error("Something went wrong");
-                        return;
-                    }
-                    mutate(data, {
-                        onSuccess: ({chat_id}) => {
-                            // toast.success(data.message);
-                            console.log("file uploaded", data);
-                            toast.success("success");
-                            router.push(`/chat/${chat_id}`);
-                        },
-                        onError: (err) => {
-                            toast.error("Error creating chat");
-                            console.log(err);
-                        },
-                    });
-                    
-                } catch (error) {
-                    console.log("error uploading file", error);
-                } finally {
-                    setUploading(false);
-                }                   
+            
+                mutate(data, {
+                  onSuccess: ({ chat_id }) => {
+                    console.log("File uploaded successfully:", data);
+                    toast.success("Upload Success");
+                    router.push(`/chat/${chat_id}`);
+                  },
+                  onError: (err) => {
+                    console.error("Error in mutation:", err);
+                    toast.error("Error creating chat");
+                  },
+                });
+              } catch (error) {
+                console.error("Error uploading file:", error);
+                toast.error("Upload failed");
+              } finally {
+                setUploading(false);
+              }
             },
+            
     });
   return (
     <div className="p-2 bg-black rounded-xl">
