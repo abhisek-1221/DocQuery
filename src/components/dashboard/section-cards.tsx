@@ -12,7 +12,7 @@ import {
 export function SectionCards() {
   return (
     <div className="grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-6">
-      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm dark:bg-card p-4">
+      <Card className="bg-gradient-to-t from-primary/5 to-card dark:bg-card p-4 shadow-xl shadow-red-950">
         <CardHeader>
           <CardDescription>Total Revenue</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums">$1,250.00</CardTitle>
@@ -30,7 +30,7 @@ export function SectionCards() {
         </CardFooter>
       </Card>
 
-      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm dark:bg-card p-4">
+      <Card className="bg-gradient-to-t from-primary/5 to-card dark:bg-card p-4 shadow-xl shadow-red-950">
         <CardHeader>
           <CardDescription>New Customers</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums">1,234</CardTitle>
@@ -48,7 +48,7 @@ export function SectionCards() {
         </CardFooter>
       </Card>
 
-      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm dark:bg-card p-4">
+      <Card className="bg-gradient-to-t from-primary/5 to-card dark:bg-card p-4 shadow-xl shadow-red-950">
         <CardHeader>
           <CardDescription>Active Accounts</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums">45,678</CardTitle>
@@ -66,7 +66,7 @@ export function SectionCards() {
         </CardFooter>
       </Card>
 
-      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm dark:bg-card p-4">
+      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-xl shadow-red-950 dark:bg-card p-4">
         <CardHeader>
           <CardDescription>Growth Rate</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums">4.5%</CardTitle>
