@@ -6,6 +6,7 @@ import { chats, messages as _messages } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { groq } from '@ai-sdk/groq';
+import { tools } from '@/lib/ai/tools';
 
 
 const openai = createOpenAI({
@@ -16,7 +17,10 @@ const openai = createOpenAI({
 
 export async function POST(req:Request){
     try {
-        const {messages, chatId} = await req.json()
+        const {messages, chatId, feature} = await req.json()
+
+        if(feature === "DocumentRAG"){
+
         const _chats = await db.select().from(chats).where(eq(chats.id, chatId));
         if(_chats.length !=1){
             return NextResponse.json({error: "chat not found"}, {status: 404});
@@ -77,8 +81,41 @@ export async function POST(req:Request){
                 
         return response.toDataStreamResponse();
     } 
+
+    else if (feature === 'websearch'){
+      const result = streamText({
+        model: openai("gpt-3.5-turbo"),
+        system: `
+          You are an AI-powered e-commerce assistant, specialized in helping users find the best products online.
+          Your role is to assist users with product searches, price comparisons, availability checks, and recommendations.
+          You use structured web search results to provide accurate and up-to-date information.
+      
+          - Always prioritize relevance, quality, and verified product data.
+          - Do not fabricate details; rely only on retrieved search results.
+          - If a product isn't found, suggest alternative queries or related searches.
+          - Present product details in a clear, user-friendly manner.
+      
+          When users ask for product recommendations, search results should include:
+          - Product Name
+          - Price
+          - Availability (In stock / Out of stock)
+          - Ratings & Reviews
+          - A direct link to purchase
+      
+          Stay concise, helpful, and professional. Your goal is to make online shopping easier and more efficient.
+          Also Write Summary of the search content
+        `,
+        messages,
+        tools,
+        maxSteps:5
+      });
+      
+      return result.toDataStreamResponse();
+    }
+  }
     catch (error) {
         console.error('Error:', error);
         return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
+  
 }

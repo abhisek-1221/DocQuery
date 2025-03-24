@@ -33,7 +33,8 @@ export default function ChatComponent({ chatId, pdfUrl }: Props) {
   const { input, handleInputChange, handleSubmit, messages } = useChat({
     api: '/api/chat',
     body: {
-      chatId
+      chatId,
+      feature:"DocumentRAG",
     },
     initialMessages: data || [],
     onFinish: () => setIsAssistantTyping(false),

@@ -25,7 +25,7 @@ export const Homie = async () => {
   return (
     <div className="flex flex-col items-center text-center">
           <div className="flex items-center">
-          <h1 className="mr-3 text-5xl font-semibold text-white">Smart AI for <span className="text-purple-300">Thrift Stores</span></h1>
+          <h1 className="mr-3 text-5xl font-semibold text-white">GenAI Ecommerce <span className="text-purple-300">Search Engine</span></h1>
           <UserButton afterSignOutUrl="/" />
           </div>
 
