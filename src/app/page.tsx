@@ -56,6 +56,20 @@ export default async function Home() {
           </div>
         </div>
       </div>
+      {/* Dashboard Analysis Demo */}
+      <div className="mt-16 px-4 md:px-8">
+        <h2 className="text-3xl font-bold text-center mb-6">Upload CSV/Excel for Dashboard Analysis</h2>
+        <div className="max-w-5xl mx-auto rounded-xl overflow-hidden shadow-2xl">
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+            <iframe 
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+              src="https://www.tella.tv/video/cm8otxh23001g0bjy4m6qg21o/embed?b=0&title=0&a=0&loop=1&autoPlay=true&t=0&muted=1&wt=0"
+              allowFullScreen
+              allowTransparency
+            />
+          </div>
+        </div>
+      </div>
 
       <div className='flex justify-center items-center'>
         <FeaturesSectionDemo />
