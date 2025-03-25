@@ -43,16 +43,20 @@ export default function MessageWS({ message }: { message: Message }) {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      <div className="flex items-center gap-2 mb-4 px-4 py-2">
-        <div className="text-sm text-gray-400">
+    <div className="bg-black text-white max-h-screen">
+      <div className="flex items-start gap-3 mb-2 px-4 pt-2 pb-1 max-w-full">
+        <div className="text-sm text-gray-400 flex-shrink-0 pt-0.5">
           {message.role === "user" ? "You" : "Assistant"}
         </div>
-        <div className="text-sm">
-          <ReactMarkdown>
-            {message.content}
-          </ReactMarkdown>
-        </div>
+        {message.role === "user" && (
+          <div className="text-sm flex-grow overflow-hidden">
+            <div className="break-words text-lg font-bold">
+              <ReactMarkdown>
+                {message.content}
+              </ReactMarkdown>
+            </div>
+          </div>
+        )}
       </div>
 
       {message.toolInvocations?.map((tool) => {
@@ -61,12 +65,12 @@ export default function MessageWS({ message }: { message: Message }) {
         if (state === "result" && toolName === "searchEcommerce") {
           return (
             <div key={toolCallId} className="w-full">
-              <div className="mb-4 px-4">
+              <div className="mb-3 px-4">
                 <h3 className="text-4xl font-bold mb-2">
                   {tool.result.query}
                 </h3>
                 
-                <div className="flex border-b border-gray-800 mb-4">
+                <div className="flex border-b border-gray-800 mb-3">
                   <div className="flex items-center space-x-3 mb-0">
                     <button className="flex items-center px-2 py-3 border-b-2 border-white text-white">
                       <span className="material-icons mr-1">🔍</span>
@@ -99,22 +103,19 @@ export default function MessageWS({ message }: { message: Message }) {
               )}
 
               <div className="mx-4">
-                <div className="flex mb-4 gap-2 overflow-x-auto">
+                <div className="flex mb-3 gap-2 overflow-x-auto">
                   {tool.result.results.slice(0, 4).map((source: any, index: number) => (
                     <div key={index} className="flex-shrink-0 px-3 py-2 bg-gray-900 rounded-lg">
                       <div className="flex items-center">
                         <span className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-xs mr-2">
-                          {index === 0 ? "🌐" : index === 1 ? "💰" : index === 2 ? "📱" : "📱"}
+                          {source.icon || (index === 0 ? "🌐" : index === 1 ? "💰" : index === 2 ? "📱" : "📱")}
                         </span>
                         <span className="text-sm font-medium">
-                          {index === 0 ? "Smartprix" : index === 1 ? "Digit Insurance" : index === 2 ? "Gadgets Now" : "Sources"}
+                          {source.name || source.title || `Source ${index + 1}`}
                         </span>
                       </div>
                       <div className="text-xs text-gray-400 mt-1">
-                        {index === 0 ? "Best Mobile Phones Under 100000 in India (Mar 2025)" : 
-                         index === 1 ? "6 Best iPhones for Gaming in India in 2025 - Digit Insurance" : 
-                         index === 2 ? "Mobile Phones under 100000 Online in India (March 2025)" : 
-                         "+5 sources"}
+                        {source.description || source.text?.substring(0, 60) || ""}
                       </div>
                     </div>
                   ))}
@@ -122,37 +123,7 @@ export default function MessageWS({ message }: { message: Message }) {
               </div>
 
               <div className="relative px-4">
-                <p className="text-xl mb-4">Here are some of the top iPhones available in India under ₹1 lakh with 256 GB storage:</p>
-
-                <ul className="list-disc pl-8 space-y-6 mb-4">
-                  {tool.result.results.slice(0, 2).map((product: any, index: number) => (
-                    <li key={index} className="pb-6">
-                      <div className="font-bold text-xl mb-2">
-                        {index === 0 ? "Apple iPhone 16" : "Apple iPhone 15 Plus"}
-                      </div>
-                      
-                      <ul className="list-disc pl-8 space-y-2">
-                        <li>
-                          <span className="font-semibold">Price:</span> {index === 0 ? "₹69,999" : "₹68,499"}
-                        </li>
-                        <li>
-                          <span className="font-semibold">Launch Date:</span> {index === 0 ? "September 2024" : "September 2023"}
-                        </li>
-                        <li>
-                          <span className="font-semibold">Key Features:</span>
-                          <ul className="list-disc pl-8 space-y-1 mt-1">
-                            <li>Display: {index === 0 ? "6.1-inch OLED" : "6.7-inch OLED"}</li>
-                            <li>Processor: {index === 0 ? "A18" : "A16"}</li>
-                            <li>Camera: Dual rear (48 MP + 12 MP), 12 MP front</li>
-                            <li>Battery: {index === 0 ? "3350 mAh" : "4006 mAh"}</li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="relative mt-4">
+                <div className="relative mb-6">
                   {tool.result.results.length > 3 && (
                     <button 
                       onClick={scrollLeft} 
@@ -236,6 +207,70 @@ export default function MessageWS({ message }: { message: Message }) {
                     </button>
                   )}
                 </div>
+                
+                <div className="text-xl mb-4">
+                  <ReactMarkdown 
+                    components={{
+                      // Define custom components with proper Tailwind classes
+                      p: ({node, ...props}) => <p className="mb-4" {...props} />,
+                      h1: ({node, ...props}) => <h1 className="text-2xl font-bold mb-3 mt-4" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="text-xl font-bold mb-2 mt-3" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="text-lg font-bold mb-2 mt-3" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc pl-8 mb-4 mt-2" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal pl-8 mb-4 mt-2" {...props} />,
+                      li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                      strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
+                      em: ({node, ...props}) => <em className="italic" {...props} />,
+                      blockquote: ({node, ...props}) => <blockquote className="pl-4 border-l-4 border-gray-700 italic my-4" {...props} />,
+                      code: ({node, ...props}) => <code className="bg-gray-800 px-1 rounded" {...props} />,
+                      pre: ({node, ...props}) => <pre className="bg-gray-800 p-3 rounded my-4 overflow-x-auto" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-400 underline" {...props} />
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
+
+                {/* Conditionally render the product list */}
+                {(!message.content || message.content.length < 100) && (
+                  <ul className="list-disc pl-8 space-y-6 mb-4">
+                    {tool.result.results.slice(0, 2).map((product: any, index: number) => (
+                      <li key={product.id || index} className="pb-6">
+                        <div className="font-bold text-xl mb-2">
+                          {product.title || `Product ${index + 1}`}
+                        </div>
+                        
+                        <ul className="list-disc pl-8 space-y-2">
+                          {product.price && (
+                            <li>
+                              <span className="font-semibold">Price:</span> {product.price}
+                            </li>
+                          )}
+                          {product.publishedDate && (
+                            <li>
+                              <span className="font-semibold">Launch Date:</span> {formatDate(product.publishedDate)}
+                            </li>
+                          )}
+                          {product.features && (
+                            <li>
+                              <span className="font-semibold">Key Features:</span>
+                              <ul className="list-disc pl-8 space-y-1 mt-1">
+                                {Object.entries(product.features).map(([key, value], i) => (
+                                  <li key={i}>{key}: {String(value)}</li>
+                                ))}
+                              </ul>
+                            </li>
+                          )}
+                          {product.text && !product.features && (
+                            <li>
+                              <span className="font-semibold">Description:</span> {truncateText(product.text, 200)}
+                            </li>
+                          )}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <div className="mt-4">
                   <div className="flex items-center text-gray-400">
@@ -267,10 +302,10 @@ export default function MessageWS({ message }: { message: Message }) {
         if (state !== "result" && toolName === "searchEcommerce") {
           return (
             <div key={toolCallId} className="w-full">
-              <div className="mb-4 px-4">
+              <div className="mb-3 px-4">
                 <div className="h-10 w-2/3 bg-gray-800 rounded-md animate-pulse mb-2"></div>
                 
-                <div className="flex border-b border-gray-800 mb-4">
+                <div className="flex border-b border-gray-800 mb-3">
                   <div className="flex items-center space-x-3 mb-0">
                     <div className="h-8 w-24 bg-gray-800 rounded-md animate-pulse"></div>
                     <div className="h-8 w-24 bg-gray-800 rounded-md animate-pulse"></div>
@@ -283,7 +318,7 @@ export default function MessageWS({ message }: { message: Message }) {
               </div>
 
               <div className="mx-4">
-                <div className="flex mb-4 gap-2 overflow-x-auto">
+                <div className="flex mb-3 gap-2 overflow-x-auto">
                   {[1, 2, 3, 4].map((index) => (
                     <div key={index} className="flex-shrink-0 px-3 py-2 bg-gray-900 rounded-lg animate-pulse">
                       <div className="flex items-center">
@@ -297,10 +332,8 @@ export default function MessageWS({ message }: { message: Message }) {
               </div>
 
               <div className="relative px-4">
-                <div className="h-6 w-full bg-gray-800 rounded-md animate-pulse mb-4"></div>
-
                 <div className="relative">
-                  <div className="flex overflow-x-scroll scrollbar-hide space-x-4 pb-4 no-scrollbar">
+                  <div className="flex overflow-x-scroll scrollbar-hide space-x-4 pb-4 no-scrollbar mb-6">
                     {[1, 2, 3, 4].map((item) => (
                       <div 
                         key={item} 
@@ -329,6 +362,8 @@ export default function MessageWS({ message }: { message: Message }) {
                     ))}
                   </div>
                 </div>
+                
+                <div className="h-6 w-full bg-gray-800 rounded-md animate-pulse mb-3"></div>
 
                 <div className="mt-4">
                   <div className="flex items-center">
