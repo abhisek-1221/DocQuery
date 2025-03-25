@@ -2,7 +2,7 @@ import React from 'react'
 import {Button} from "@/components/ui/button";
 import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
-import { LogIn } from "lucide-react";
+import { LogIn, ScanSearch } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
 import { checkSubscription } from '@/lib/subcription'
 import SubscriptionButton from '@/components/SubscriptionButton'
@@ -48,16 +48,29 @@ export const Homie = async () => {
           <br /> and Actionable Insights
           </p>
           <div className="w-full mt-4">
-            {isAuth ? (
+          {isAuth ? (
             <FileUpload />
-            ):(
-              <Link href='/sign-in'>
-              <Button className="bg-orange-700">Login to get Started 
-                <LogIn className="w-4 h-4 ml-2"/>
-              </Button>
-              </Link>
+          ) : (
+            <div className='flex justify-center items-center space-x-4'>
+              <div>
+                  <Link href='/sign-in'>
+                    <Button className="bg-orange-700">Login to get Started 
+                      <LogIn className="w-4 h-4 ml-2"/>
+                    </Button>
+                  </Link>
+                </div>
+                <div>
+                  <Link href='/websearch'>
+                    <Button className="bg-stone-800">Check Web Search
+                      <ScanSearch className="w-4 h-4 ml-2"/>
+                    </Button>
+                  </Link>
+                </div>
+            </div>
+              
             )}
-          </div>
+        </div>
+
         </div>
   )
 }
