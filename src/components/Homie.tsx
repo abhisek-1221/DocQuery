@@ -29,7 +29,7 @@ export const Homie = async () => {
           <UserButton afterSignOutUrl="/" />
           </div>
 
-          <div className="flex mt-2">
+          <div className="flex mt-2 space-x-2">
             {isAuth && firstChat && (
               <>
                 <Link href={`/chat/${firstChat.id}`}>
@@ -37,6 +37,13 @@ export const Homie = async () => {
                     Visit Chats <ArrowRight className="ml-2" />
                   </Button>
                 </Link>
+                <div>
+                  <Link href='/websearch'>
+                    <Button className="bg-stone-800">Check Web Search
+                      <ScanSearch className="w-4 h-4 ml-2"/>
+                    </Button>
+                  </Link>
+                </div>
                 <div className="ml-3">
                   <SubscriptionButton isPro={isPro} />
                 </div>

@@ -63,11 +63,15 @@ export default function MessageWS({ message }: { message: Message }) {
         const { toolName, toolCallId, state } = tool;
 
         if (state === "result" && toolName === "searchEcommerce") {
+          // Safely handle potential undefined values
+          const results = tool.result?.results || [];
+          const query = tool.result?.query || "Search Results";
+          
           return (
             <div key={toolCallId} className="w-full">
               <div className="mb-3 px-4">
                 <h3 className="text-4xl font-bold mb-2">
-                  {tool.result.query}
+                  {query}
                 </h3>
                 
                 <div className="flex border-b border-gray-800 mb-3">
@@ -83,18 +87,18 @@ export default function MessageWS({ message }: { message: Message }) {
                     <button className="flex items-center px-2 py-3 text-gray-400">
                       <span className="material-icons mr-1">📚</span>
                       <span>Sources</span>
-                      <span className="ml-1 px-1 text-xs rounded-sm bg-gray-700">8</span>
+                      <span className="ml-1 px-1 text-xs rounded-sm bg-gray-700">{results.length || 0}</span>
                     </button>
                   </div>
                   <div className="ml-auto flex items-center">
                     <Badge variant="outline" className="bg-gray-800 text-white">
-                      {tool.result.results.length} results
+                      {results.length || 0} results
                     </Badge>
                   </div>
                 </div>
               </div>
 
-              {tool.result.error && (
+              {tool.result?.error && (
                 <Card className="border-red-900 bg-red-950/50 mx-4">
                   <CardContent className="pt-6">
                     <p className="text-red-500">{tool.result.error}</p>
@@ -104,18 +108,18 @@ export default function MessageWS({ message }: { message: Message }) {
 
               <div className="mx-4">
                 <div className="flex mb-3 gap-2 overflow-x-auto">
-                  {tool.result.results.slice(0, 4).map((source: any, index: number) => (
+                  {results.slice(0, 4).map((source: any, index: number) => (
                     <div key={index} className="flex-shrink-0 px-3 py-2 bg-gray-900 rounded-lg">
                       <div className="flex items-center">
                         <span className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-xs mr-2">
-                          {source.icon || (index === 0 ? "🌐" : index === 1 ? "💰" : index === 2 ? "📱" : "📱")}
+                          {source.favicon ? "🌐" : index === 0 ? "🌐" : index === 1 ? "💰" : index === 2 ? "📱" : "📱"}
                         </span>
-                        <span className="text-sm font-medium">
-                          {source.name || source.title || `Source ${index + 1}`}
+                        <span className="text-sm font-medium truncate">
+                          {source.author || source.title?.split('-')[0] || `Source ${index + 1}`}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        {source.description || source.text?.substring(0, 60) || ""}
+                      <div className="text-xs text-gray-400 mt-1 truncate">
+                        {source.title || source.text?.substring(0, 60) || ""}
                       </div>
                     </div>
                   ))}
@@ -124,7 +128,7 @@ export default function MessageWS({ message }: { message: Message }) {
 
               <div className="relative px-4">
                 <div className="relative mb-6">
-                  {tool.result.results.length > 3 && (
+                  {results.length > 3 && (
                     <button 
                       onClick={scrollLeft} 
                       className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
@@ -142,9 +146,9 @@ export default function MessageWS({ message }: { message: Message }) {
                       scrollbarWidth: 'none'
                     }}
                   >
-                    {tool.result.results.map((product: any) => (
+                    {results.map((product: any, index: number) => (
                       <div 
-                        key={product.id || Math.random().toString()} 
+                        key={product.id || index} 
                         className="flex-shrink-0 w-80 scroll-snap-align-start"
                       >
                         <Card className="bg-gray-950 border-gray-800 hover:border-gray-700 transition duration-300 h-full">
@@ -153,15 +157,15 @@ export default function MessageWS({ message }: { message: Message }) {
                               {product.title || "Untitled Product"}
                             </CardTitle>
                             <CardDescription className="text-gray-500">
-                              {formatDate(product.publishedDate)}
+                              {product.publishedDate ? formatDate(product.publishedDate) : ""}
                             </CardDescription>
                           </CardHeader>
                           
                           <CardContent className="text-sm text-gray-300">
                             <div className="space-y-4">
-                              {product.extras?.imageLinks && product.extras.imageLinks.length > 0 && (
+                              {(product.image || (product.extras?.imageLinks && product.extras.imageLinks.length > 0)) && (
                                 <img
-                                  src={product.extras.imageLinks[0] || "/api/placeholder/300/200"}
+                                  src={product.image || (product.extras?.imageLinks && product.extras.imageLinks[0]) || "/api/placeholder/300/200"}
                                   alt={product.title}
                                   className="w-full h-48 object-cover rounded-md"
                                   onError={(e) => {
@@ -173,7 +177,7 @@ export default function MessageWS({ message }: { message: Message }) {
                               
                               <p className="mb-4">{truncateText(product.text)}</p>
                               
-                              {product.extras?.links && product.extras.links.length > 0 && (
+                              {product.url && (
                                 <div>
                                   <Badge variant="secondary" className="bg-gray-800 hover:bg-gray-700">
                                     <a 
@@ -182,7 +186,7 @@ export default function MessageWS({ message }: { message: Message }) {
                                       rel="noopener noreferrer"
                                       className="flex items-center gap-1"
                                     >
-                                      View Product <ExternalLink size={14} />
+                                      View Article <ExternalLink size={14} />
                                     </a>
                                   </Badge>
                                 </div>
@@ -198,7 +202,7 @@ export default function MessageWS({ message }: { message: Message }) {
                     ))}
                   </div>
 
-                  {tool.result.results.length > 3 && (
+                  {results.length > 3 && (
                     <button 
                       onClick={scrollRight} 
                       className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
@@ -232,9 +236,9 @@ export default function MessageWS({ message }: { message: Message }) {
                 </div>
 
                 {/* Conditionally render the product list */}
-                {(!message.content || message.content.length < 100) && (
+                {(!message.content || message.content.length < 100) && results.length > 0 && (
                   <ul className="list-disc pl-8 space-y-6 mb-4">
-                    {tool.result.results.slice(0, 2).map((product: any, index: number) => (
+                    {results.slice(0, 2).map((product: any, index: number) => (
                       <li key={product.id || index} className="pb-6">
                         <div className="font-bold text-xl mb-2">
                           {product.title || `Product ${index + 1}`}
@@ -248,22 +252,30 @@ export default function MessageWS({ message }: { message: Message }) {
                           )}
                           {product.publishedDate && (
                             <li>
-                              <span className="font-semibold">Launch Date:</span> {formatDate(product.publishedDate)}
+                              <span className="font-semibold">Published Date:</span> {formatDate(product.publishedDate)}
                             </li>
                           )}
-                          {product.features && (
+                          {product.author && (
                             <li>
-                              <span className="font-semibold">Key Features:</span>
-                              <ul className="list-disc pl-8 space-y-1 mt-1">
-                                {Object.entries(product.features).map(([key, value], i) => (
-                                  <li key={i}>{key}: {String(value)}</li>
-                                ))}
-                              </ul>
+                              <span className="font-semibold">Author:</span> {product.author}
                             </li>
                           )}
-                          {product.text && !product.features && (
+                          {product.text && (
                             <li>
-                              <span className="font-semibold">Description:</span> {truncateText(product.text, 200)}
+                              <span className="font-semibold">Summary:</span> {truncateText(product.text, 200)}
+                            </li>
+                          )}
+                          {product.url && (
+                            <li>
+                              <span className="font-semibold">Source:</span> 
+                              <a 
+                                href={product.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-400 ml-1 hover:underline"
+                              >
+                                {new URL(product.url).hostname}
+                              </a>
                             </li>
                           )}
                         </ul>
@@ -288,7 +300,7 @@ export default function MessageWS({ message }: { message: Message }) {
                 </div>
               </div>
 
-              {tool.result.results.length === 0 && !tool.result.error && (
+              {results.length === 0 && !tool.result?.error && (
                 <Card className="border-yellow-900 bg-yellow-950/50 mx-4">
                   <CardContent className="pt-6">
                     <p className="text-yellow-500">No results found. Try a different search query.</p>

@@ -56,13 +56,13 @@ export default function Home() {
       <div className="p-4 border-t border-gray-800 bg-black">
         <form 
           onSubmit={handleSubmit} 
-          className="flex items-center bg-gray-900 rounded-xl border border-gray-800 focus-within:border-blue-600 transition-all duration-300"
+          className="flex items-center bg-gray-900 rounded-full border border-gray-600 focus-within:border-blue-600 transition-all duration-300"
         >
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Ask me anything about ecommerce..."
-            className="flex-1 p-3 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
+            className="flex-1 p-3 bg-black text-white placeholder-gray-500 outline-none text-md"
             disabled={isLoading}
           />
           <button
