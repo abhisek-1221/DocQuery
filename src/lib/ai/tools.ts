@@ -40,6 +40,7 @@ interface ExaSearchResult {
             }
           }
         );
+        console.log(result);
         
         // Extract the search results - note we're using result.results directly
         const searchResults = result.results.map((item) => {
