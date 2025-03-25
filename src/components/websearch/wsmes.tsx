@@ -266,12 +266,81 @@ export default function MessageWS({ message }: { message: Message }) {
 
         if (state !== "result" && toolName === "searchEcommerce") {
           return (
-            <Card key={toolCallId} className="border-blue-900 bg-blue-950/50 mx-4">
-              <CardContent className="pt-6 flex items-center gap-2">
-                <div className="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
-                <p className="text-blue-500">Searching for products...</p>
-              </CardContent>
-            </Card>
+            <div key={toolCallId} className="w-full">
+              <div className="mb-4 px-4">
+                <div className="h-10 w-2/3 bg-gray-800 rounded-md animate-pulse mb-2"></div>
+                
+                <div className="flex border-b border-gray-800 mb-4">
+                  <div className="flex items-center space-x-3 mb-0">
+                    <div className="h-8 w-24 bg-gray-800 rounded-md animate-pulse"></div>
+                    <div className="h-8 w-24 bg-gray-800 rounded-md animate-pulse"></div>
+                    <div className="h-8 w-24 bg-gray-800 rounded-md animate-pulse"></div>
+                  </div>
+                  <div className="ml-auto">
+                    <div className="h-6 w-24 bg-gray-800 rounded-md animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mx-4">
+                <div className="flex mb-4 gap-2 overflow-x-auto">
+                  {[1, 2, 3, 4].map((index) => (
+                    <div key={index} className="flex-shrink-0 px-3 py-2 bg-gray-900 rounded-lg animate-pulse">
+                      <div className="flex items-center">
+                        <div className="w-6 h-6 bg-gray-800 rounded-full mr-2"></div>
+                        <div className="h-4 w-24 bg-gray-800 rounded-md"></div>
+                      </div>
+                      <div className="h-3 w-36 bg-gray-800 rounded-md mt-1"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative px-4">
+                <div className="h-6 w-full bg-gray-800 rounded-md animate-pulse mb-4"></div>
+
+                <div className="relative">
+                  <div className="flex overflow-x-scroll scrollbar-hide space-x-4 pb-4 no-scrollbar">
+                    {[1, 2, 3, 4].map((item) => (
+                      <div 
+                        key={item} 
+                        className="flex-shrink-0 w-80 scroll-snap-align-start"
+                      >
+                        <Card className="bg-gray-950 border-gray-800 h-full animate-pulse">
+                          <CardHeader className="pb-2">
+                            <div className="h-6 w-full bg-gray-800 rounded-md mb-2"></div>
+                            <div className="h-4 w-1/2 bg-gray-800 rounded-md"></div>
+                          </CardHeader>
+                          
+                          <CardContent className="text-sm text-gray-300">
+                            <div className="space-y-4">
+                              <div className="w-full h-48 bg-gray-800 rounded-md"></div>
+                              <div className="h-4 w-full bg-gray-800 rounded-md"></div>
+                              <div className="h-4 w-3/4 bg-gray-800 rounded-md"></div>
+                              <div className="h-6 w-1/3 bg-gray-800 rounded-md"></div>
+                            </div>
+                          </CardContent>
+                          
+                          <CardFooter className="pt-2 border-t border-gray-800">
+                            <div className="h-3 w-full bg-gray-800 rounded-md"></div>
+                          </CardFooter>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="flex items-center">
+                    <div className="h-8 w-32 bg-gray-800 rounded-full animate-pulse"></div>
+                    <div className="ml-auto flex">
+                      <div className="h-6 w-6 bg-gray-800 rounded-md mx-1"></div>
+                      <div className="h-6 w-6 bg-gray-800 rounded-md mx-1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         }
       })}
