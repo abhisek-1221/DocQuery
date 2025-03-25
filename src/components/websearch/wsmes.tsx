@@ -51,10 +51,10 @@ export default function MessageWS({ message }: { message: Message }) {
         {message.role === "user" && (
           <div className="text-sm flex-grow overflow-hidden">
             <div className="break-words text-lg font-bold">
-              <ReactMarkdown>
-                {message.content}
-              </ReactMarkdown>
-            </div>
+          <ReactMarkdown>
+            {message.content}
+          </ReactMarkdown>
+        </div>
           </div>
         )}
       </div>
@@ -91,9 +91,9 @@ export default function MessageWS({ message }: { message: Message }) {
                     </button>
                   </div>
                   <div className="ml-auto flex items-center">
-                    <Badge variant="outline" className="bg-gray-800 text-white">
+                <Badge variant="outline" className="bg-gray-800 text-white">
                       {results.length || 0} results
-                    </Badge>
+                </Badge>
                   </div>
                 </div>
               </div>
@@ -129,89 +129,89 @@ export default function MessageWS({ message }: { message: Message }) {
               <div className="relative px-4">
                 <div className="relative mb-6">
                   {results.length > 3 && (
-                    <button 
-                      onClick={scrollLeft} 
-                      className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
-                    >
-                      <ChevronLeft className="text-white" />
-                    </button>
-                  )}
-
-                  <div 
-                    ref={carouselRef}
-                    className="flex overflow-x-scroll scrollbar-hide space-x-4 pb-4 no-scrollbar"
-                    style={{ 
-                      scrollSnapType: 'x mandatory',
-                      WebkitOverflowScrolling: 'touch',
-                      scrollbarWidth: 'none'
-                    }}
+                  <button 
+                    onClick={scrollLeft} 
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
                   >
+                    <ChevronLeft className="text-white" />
+                  </button>
+                )}
+
+                <div 
+                  ref={carouselRef}
+                  className="flex overflow-x-scroll scrollbar-hide space-x-4 pb-4 no-scrollbar"
+                  style={{ 
+                    scrollSnapType: 'x mandatory',
+                    WebkitOverflowScrolling: 'touch',
+                    scrollbarWidth: 'none'
+                  }}
+                >
                     {results.map((product: any, index: number) => (
-                      <div 
+                    <div 
                         key={product.id || index} 
-                        className="flex-shrink-0 w-80 scroll-snap-align-start"
-                      >
-                        <Card className="bg-gray-950 border-gray-800 hover:border-gray-700 transition duration-300 h-full">
-                          <CardHeader className="pb-2">
-                            <CardTitle className="text-xl font-semibold text-white line-clamp-2">
-                              {product.title || "Untitled Product"}
-                            </CardTitle>
-                            <CardDescription className="text-gray-500">
+                      className="flex-shrink-0 w-80 scroll-snap-align-start"
+                    >
+                      <Card className="bg-gray-950 border-gray-800 hover:border-gray-700 transition duration-300 h-full">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-xl font-semibold text-white line-clamp-2">
+                            {product.title || "Untitled Product"}
+                          </CardTitle>
+                          <CardDescription className="text-gray-500">
                               {product.publishedDate ? formatDate(product.publishedDate) : ""}
-                            </CardDescription>
-                          </CardHeader>
-                          
-                          <CardContent className="text-sm text-gray-300">
-                            <div className="space-y-4">
+                          </CardDescription>
+                        </CardHeader>
+                        
+                        <CardContent className="text-sm text-gray-300">
+                          <div className="space-y-4">
                               {(product.image || (product.extras?.imageLinks && product.extras.imageLinks.length > 0)) && (
-                                <img
+                              <img
                                   src={product.image || (product.extras?.imageLinks && product.extras.imageLinks[0]) || "/api/placeholder/300/200"}
-                                  alt={product.title}
-                                  className="w-full h-48 object-cover rounded-md"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.src = "/api/placeholder/300/200";
-                                  }}
-                                />
-                              )}
-                              
-                              <p className="mb-4">{truncateText(product.text)}</p>
-                              
+                                alt={product.title}
+                                className="w-full h-48 object-cover rounded-md"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = "/api/placeholder/300/200";
+                                }}
+                              />
+                            )}
+                            
+                            <p className="mb-4">{truncateText(product.text)}</p>
+                            
                               {product.url && (
-                                <div>
-                                  <Badge variant="secondary" className="bg-gray-800 hover:bg-gray-700">
-                                    <a 
-                                      href={product.url} 
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center gap-1"
-                                    >
+                              <div>
+                                <Badge variant="secondary" className="bg-gray-800 hover:bg-gray-700">
+                                  <a 
+                                    href={product.url} 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1"
+                                  >
                                       View Article <ExternalLink size={14} />
-                                    </a>
-                                  </Badge>
-                                </div>
-                              )}
-                            </div>
-                          </CardContent>
-                          
-                          <CardFooter className="pt-2 border-t border-gray-800 flex justify-between">
-                            <p className="text-xs text-gray-500 truncate">{product.url}</p>
-                          </CardFooter>
-                        </Card>
-                      </div>
-                    ))}
-                  </div>
+                                  </a>
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                        
+                        <CardFooter className="pt-2 border-t border-gray-800 flex justify-between">
+                          <p className="text-xs text-gray-500 truncate">{product.url}</p>
+                        </CardFooter>
+                      </Card>
+                    </div>
+                  ))}
+                </div>
 
                   {results.length > 3 && (
-                    <button 
-                      onClick={scrollRight} 
-                      className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
-                    >
-                      <ChevronRight className="text-white" />
-                    </button>
-                  )}
-                </div>
-                
+                  <button 
+                    onClick={scrollRight} 
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full hover:bg-black/70"
+                  >
+                    <ChevronRight className="text-white" />
+                  </button>
+                )}
+              </div>
+
                 <div className="text-xl mb-4">
                   <ReactMarkdown 
                     components={{
@@ -364,12 +364,12 @@ export default function MessageWS({ message }: { message: Message }) {
                               <div className="h-4 w-3/4 bg-gray-800 rounded-md"></div>
                               <div className="h-6 w-1/3 bg-gray-800 rounded-md"></div>
                             </div>
-                          </CardContent>
+              </CardContent>
                           
                           <CardFooter className="pt-2 border-t border-gray-800">
                             <div className="h-3 w-full bg-gray-800 rounded-md"></div>
                           </CardFooter>
-                        </Card>
+            </Card>
                       </div>
                     ))}
                   </div>
