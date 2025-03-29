@@ -32,7 +32,14 @@
 - Clerk  
 - AWS S3  
 - TanStack  
-- Drizzle ORM  
+- Drizzle ORM
+
+  ## [Thriftwise High Level Design and Codebase Review Video Demo](https://thriftwise.sahoo.pro/arch)
+
+    
+   ![arch](https://github.com/user-attachments/assets/232adc1d-c2a2-4ca0-9a5a-f9a4d0346a48)
+
+
 
 ## 🚀 Get Started  
 1. **Clone the repository**  
