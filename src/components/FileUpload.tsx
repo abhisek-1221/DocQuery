@@ -6,14 +6,13 @@ import { uploadToS3 } from '@/lib/s3';
 import { toast } from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { log } from 'console';
 import { useRouter } from 'next/navigation';
 
 
 
 const FileUpload = () => {
   const router = useRouter();
-const [uploading, setUploading] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
       file_key,
